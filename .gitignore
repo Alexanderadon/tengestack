@@ -1,0 +1,18 @@
+# deps / build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# env — токены HH не коммитим
+.env
+.env.local
+
+# сырой архив выгрузок коммитим (data/raw), но не временные файлы
+data/raw/*.tmp
+data/.cache/
+
+# os / editor
+.DS_Store
+Thumbs.db

@@ -1,0 +1,37 @@
+{
+  "name": "tengestack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Зарплаты в IT Казахстана — живой дашборд по данным hh.kz",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint src scripts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "data:fetch": "tsx scripts/fetch.ts",
+    "data:build": "tsx scripts/build-dataset.ts",
+    "data:fixture": "tsx scripts/make-fixture.ts",
+    "data:refresh": "tsx scripts/fetch.ts && tsx scripts/build-dataset.ts",
+    "icons": "tsx scripts/make-icons.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.10.8",
+    "next": "^15.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "sass": "^1.83.0",
+    "sharp": "^0.33.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "packageManager": "pnpm@10.33.0"
+}
