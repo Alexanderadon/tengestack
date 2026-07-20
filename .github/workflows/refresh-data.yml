@@ -1,0 +1,41 @@
+name: Refresh dataset
+
+# Еженедельная выгрузка HH → новый снапшот → коммит → авто-деплой хостингом.
+on:
+  schedule:
+    - cron: "0 2 * * 1" # понедельник 02:00 UTC (08:00 Алматы)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Fetch vacancies from HH API
+        env:
+          HH_CLIENT_ID: ${{ secrets.HH_CLIENT_ID }}
+          HH_CLIENT_SECRET: ${{ secrets.HH_CLIENT_SECRET }}
+          HH_CONTACT_EMAIL: ${{ secrets.HH_CONTACT_EMAIL }}
+        run: pnpm data:fetch
+
+      - name: Build columnar dataset
+        run: pnpm data:build
+
+      - name: Commit snapshot
+        run: |
+          git config user.name "tengestack-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/raw public/data
+          git diff --cached --quiet && echo "Nothing new" && exit 0
+          git commit -m "data: weekly snapshot $(date -u +%F)"
+          git push
