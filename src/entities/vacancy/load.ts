@@ -8,12 +8,20 @@ export interface LoadedData {
   searchIndex: string[];
 }
 
+/**
+ * База данных-снапшота. По умолчанию — тот же origin (public/data).
+ * NEXT_PUBLIC_DATA_BASE позволяет деплоить фронт отдельно от данных:
+ * прод указывает на raw.githubusercontent репозитория — еженедельный
+ * data-коммит обновляет живой сайт без редеплоя.
+ */
+const DATA_BASE = process.env.NEXT_PUBLIC_DATA_BASE ?? "";
+
 export async function loadDataset(onProgress: (frac: number) => void): Promise<LoadedData> {
-  const metaRes = await fetch("/data/meta.json");
+  const metaRes = await fetch(`${DATA_BASE}/data/meta.json`);
   if (!metaRes.ok) throw new Error(`meta.json: HTTP ${metaRes.status}`);
   const meta = (await metaRes.json()) as DatasetMeta;
 
-  const res = await fetch(meta.datasetUrl);
+  const res = await fetch(`${DATA_BASE}${meta.datasetUrl}`);
   if (!res.ok || !res.body) throw new Error(`dataset: HTTP ${res.status}`);
 
   // Прогресс по content-length нельзя (gzip) — считаем по meta.bytes (несжатый размер).

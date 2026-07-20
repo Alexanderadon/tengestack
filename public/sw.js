@@ -28,10 +28,13 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (request.method !== "GET") return;
   const url = new URL(request.url);
-  if (url.origin !== self.location.origin) return;
+  // датасет может жить на другом origin (raw.githubusercontent) — кэшируем и его
+  const isDataset = url.pathname.includes("/data/") &&
+    (url.origin === self.location.origin || url.hostname === "raw.githubusercontent.com");
+  if (url.origin !== self.location.origin && !isDataset) return;
 
   // датасет: SWR
-  if (url.pathname.startsWith("/data/")) {
+  if (isDataset) {
     event.respondWith(
       caches.open(RUNTIME).then(async (cache) => {
         const cached = await cache.match(request);
