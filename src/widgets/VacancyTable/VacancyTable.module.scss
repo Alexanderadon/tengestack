@@ -1,0 +1,211 @@
+$grid: minmax(220px, 1fr) 110px 92px 92px minmax(180px, 230px) 64px;
+
+.wrap {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--gap-4) var(--gap-4) var(--gap-3);
+}
+
+.title {
+  font-size: var(--fs-m);
+  font-weight: 650;
+}
+
+.count {
+  font-size: var(--fs-s);
+  color: var(--c-text-muted);
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: $grid;
+  gap: var(--gap-3);
+  padding: 0 var(--gap-4) var(--gap-2);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.col,
+.colBtn {
+  font-size: var(--fs-xs);
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--c-text-muted);
+  text-align: left;
+}
+
+.colBtn {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--c-text);
+  }
+}
+
+.scroll {
+  height: 560px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: $grid;
+  gap: var(--gap-3);
+  align-items: center;
+  padding: 0 var(--gap-4);
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text);
+  text-decoration: none;
+  font-size: var(--fs-s);
+
+  &:hover {
+    background: var(--c-surface-2);
+    text-decoration: none;
+  }
+}
+
+.cellMain {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.position {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.employer {
+  font-size: var(--fs-xs);
+  color: var(--c-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cellCity,
+.cellMode {
+  color: var(--c-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  border: 1px solid var(--c-border);
+  color: var(--c-text-muted);
+}
+
+.chip_middle {
+  border-color: color-mix(in srgb, var(--c-accent) 45%, transparent);
+  color: var(--c-accent);
+}
+
+.chip_senior,
+.chip_lead {
+  border-color: color-mix(in srgb, var(--c-text) 30%, transparent);
+  color: var(--c-text);
+}
+
+.cellSalary {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gross {
+  font-size: var(--fs-xs);
+  color: var(--c-text-faint);
+  font-weight: 400;
+}
+
+.noSalary {
+  color: var(--c-text-faint);
+  font-weight: 400;
+}
+
+.cellDate {
+  color: var(--c-text-faint);
+  font-size: var(--fs-xs);
+  text-align: right;
+}
+
+/* -------- мобильные карточки --------
+   Строка виртуализатора позиционирована абсолютно → дети могут якориться
+   к ней. Верхняя строка: должность (+ зарплата справа абсолютом),
+   нижняя: город · грейд · формат инлайном, дата — правый нижний угол. */
+@media (max-width: 720px) {
+  .row {
+    display: block;
+    padding: 10px var(--gap-4) 8px;
+  }
+
+  .cellMain {
+    padding-right: 136px;
+  }
+
+  .cellSalary {
+    position: absolute;
+    top: 10px;
+    right: var(--gap-4);
+    max-width: 128px;
+    white-space: normal;
+    text-align: right;
+    font-size: var(--fs-xs);
+    line-height: 1.3;
+  }
+
+  .cellCity,
+  .cellGrade,
+  .cellMode {
+    display: inline;
+    font-size: var(--fs-xs);
+  }
+
+  .cellCity::after {
+    content: " · ";
+    color: var(--c-text-faint);
+  }
+
+  .cellGrade .chip {
+    border: 0;
+    padding: 0;
+    font-size: var(--fs-xs);
+  }
+
+  .cellGrade:has(.chip)::after {
+    content: " · ";
+    color: var(--c-text-faint);
+  }
+
+  .cellDate {
+    position: absolute;
+    right: var(--gap-4);
+    bottom: 8px;
+  }
+
+  .scroll {
+    height: 480px;
+  }
+}

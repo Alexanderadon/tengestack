@@ -1,0 +1,194 @@
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-m);
+  padding: var(--gap-4);
+  min-width: 0;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-3);
+  margin-bottom: var(--gap-3);
+  flex-wrap: wrap;
+}
+
+.cardTitle {
+  font-size: var(--fs-m);
+  font-weight: 650;
+}
+
+.cardHint {
+  font-size: var(--fs-xs);
+  color: var(--c-text-faint);
+}
+
+.chartBox {
+  position: relative;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  /* фокус клавиатуры на невидимых мишенях */
+  rect[role="button"]:focus-visible {
+    outline: none;
+    stroke: var(--c-accent);
+    stroke-width: 2;
+  }
+}
+
+.gridline {
+  stroke: var(--viz-grid);
+  stroke-width: 1;
+}
+
+.baseline {
+  stroke: var(--viz-baseline);
+  stroke-width: 1;
+}
+
+.bar {
+  transition: opacity 0.15s ease;
+}
+
+.medianLine {
+  stroke: var(--c-text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.medianLabel {
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--c-text-muted);
+}
+
+.tick {
+  font-size: 10px;
+  fill: var(--c-text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.chartEmpty {
+  height: 120px;
+  display: grid;
+  place-items: center;
+  color: var(--c-text-faint);
+}
+
+/* ---------- tooltip ---------- */
+
+.tooltip {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  max-width: 240px;
+  padding: 6px 10px;
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-s);
+  box-shadow: var(--shadow-1);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+
+  strong {
+    color: var(--c-text);
+  }
+
+  span {
+    color: var(--c-text-muted);
+  }
+}
+
+/* ---------- горизонтальные бары ---------- */
+
+.hbars {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hbarRow {
+  display: grid;
+  grid-template-columns: 118px 1fr auto;
+  align-items: center;
+  gap: var(--gap-3);
+  padding: 5px 6px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    background: var(--c-surface-2);
+  }
+}
+
+.hbarRowActive {
+  background: var(--c-accent-soft);
+
+  &:hover {
+    background: var(--c-accent-soft);
+  }
+}
+
+.hbarLabel {
+  font-size: var(--fs-s);
+  color: var(--c-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hbarTrack {
+  height: 12px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: transparent;
+  min-width: 0;
+}
+
+.hbarFill {
+  display: block;
+  height: 100%;
+  border-radius: 0 4px 4px 0; /* скругление — только на «конце данных» */
+  background: var(--viz-mark);
+  transition: width 0.25s ease, opacity 0.15s ease;
+}
+
+.hbarValue {
+  font-size: var(--fs-s);
+  color: var(--c-text);
+  font-weight: 600;
+  white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.hbarSub {
+  font-size: var(--fs-xs);
+  color: var(--c-text-faint);
+  font-weight: 400;
+}
+
+@media (max-width: 560px) {
+  .hbarRow {
+    grid-template-columns: 92px 1fr auto;
+    gap: var(--gap-2);
+  }
+
+  .hbarLabel,
+  .hbarValue {
+    font-size: var(--fs-xs);
+  }
+}
