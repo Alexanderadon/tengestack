@@ -21,12 +21,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      - name: Fetch vacancies from HH API
-        env:
-          HH_CLIENT_ID: ${{ secrets.HH_CLIENT_ID }}
-          HH_CLIENT_SECRET: ${{ secrets.HH_CLIENT_SECRET }}
-          HH_CONTACT_EMAIL: ${{ secrets.HH_CONTACT_EMAIL }}
-        run: pnpm data:fetch
+      # Скрейпинг публичных страниц hh.kz — токен/секреты не нужны.
+      - name: Scrape vacancies from hh.kz
+        run: pnpm data:scrape
 
       - name: Build columnar dataset
         run: pnpm data:build

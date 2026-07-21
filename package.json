@@ -11,9 +11,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "data:fetch": "tsx scripts/fetch.ts",
+    "data:scrape": "tsx scripts/scrape.ts",
     "data:build": "tsx scripts/build-dataset.ts",
     "data:fixture": "tsx scripts/make-fixture.ts",
-    "data:refresh": "tsx scripts/fetch.ts && tsx scripts/build-dataset.ts",
+    "data:refresh": "tsx scripts/scrape.ts && tsx scripts/build-dataset.ts",
     "icons": "tsx scripts/make-icons.ts"
   },
   "dependencies": {
