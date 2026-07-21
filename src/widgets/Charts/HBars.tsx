@@ -51,10 +51,8 @@ export function HBars({ items, hasActive, onItemClick, ariaLabel, emptyText }: P
               }}
             />
           </span>
-          <span className={`${s.hbarValue} tnum`}>
-            {it.valueText}
-            {it.subText && <span className={s.hbarSub}>{it.subText}</span>}
-          </span>
+          <span className={`${s.hbarValue} tnum`}>{it.valueText}</span>
+          <span className={`${s.hbarSub} tnum`}>{it.subText ?? ""}</span>
         </button>
       ))}
     </div>
