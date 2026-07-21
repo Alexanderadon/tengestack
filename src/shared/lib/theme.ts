@@ -11,11 +11,11 @@ function subscribe(cb: () => void) {
 }
 
 function read(): Theme {
-  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
 export function useTheme(): { theme: Theme; toggle: () => void } {
-  const theme = useSyncExternalStore(subscribe, read, () => "dark" as Theme);
+  const theme = useSyncExternalStore(subscribe, read, () => "light" as Theme);
   const toggle = useCallback(() => {
     const next: Theme = read() === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;

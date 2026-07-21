@@ -19,7 +19,7 @@
   --content-max: 1280px;
 
   /* --- типографика --- */
-  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --fs-xs: 0.75rem;
   --fs-s: 0.8125rem;
   --fs-m: 0.9375rem;
@@ -31,76 +31,74 @@
   --focus-ring: 0 0 0 2px var(--c-bg), 0 0 0 4px var(--c-accent);
 }
 
-/* --- тёмная (по умолчанию) ---
-   Тёплый нейтральный графит, без синевы: золото читается как «премиум-металл»,
-   а не как предупреждение. Все контрасты к поверхности проверены (WCAG). */
+/* --- СВЕТЛАЯ — основная тема по умолчанию ---
+   Классический монохром: чёрный текст на белом, тонкие серые границы, без цвета. */
 :root,
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --c-bg: #14130f;
-  --c-surface: #1c1a15;
-  --c-surface-2: #24211b;
-  --c-border: #322e26;
-  --c-text: #ede7db;
-  --c-text-muted: #a29889;
-  --c-text-faint: #6e6555;
-
-  --c-accent: #f0b441;          /* тенге-золото */
-  --c-accent-strong: #f7c765;   /* яркий блик для акцента на цифрах */
-  --c-accent-text: #1a1405;     /* текст на золоте */
-  --c-accent-soft: rgb(240 180 65 / 0.13);
-  --c-link: #e6b968;
-  --c-danger: #ef8a63;
-  --c-ok: #63c79a;
-
-  /* --- палитра данных ---
-     Одномерные чарты: --viz-mark (золото, ≥3:1 к поверхности, проверено).
-     Категориальные слоты — валидированный референс dataviz-скилла (тёмные шаги). */
-  --viz-mark: #e9ae43;
-  --viz-mark-soft: rgb(233 174 67 / 0.5);
-  --viz-1: #3987e5;
-  --viz-2: #199e70;
-  --viz-3: #c98500;
-  --viz-4: #008300;
-  --viz-5: #9085e9;
-  --viz-6: #e66767;
-  --viz-7: #d55181;
-  --viz-8: #d95926;
-  --viz-grid: #262219;
-  --viz-baseline: #3a342a;
-}
-
 :root[data-theme="light"] {
   color-scheme: light;
-  --c-bg: #f6f3ec;
-  --c-surface: #fffdf8;
-  --c-surface-2: #efece3;
-  --c-border: #e4dfd3;
-  --c-text: #211d16;
-  --c-text-muted: #625b4e;
-  --c-text-faint: #9a9384;
+  --c-bg: #f5f5f4;
+  --c-surface: #ffffff;
+  --c-surface-2: #efefee;
+  --c-border: #e3e3e1;
+  --c-text: #131312;
+  --c-text-muted: #66655f;
+  --c-text-faint: #9a9a94;
 
-  --c-accent: #a9760c;
-  --c-accent-strong: #8f6208;
-  --c-accent-text: #fffaf0;
-  --c-accent-soft: rgb(169 118 12 / 0.11);
-  --c-link: #9a6d10;
-  --c-danger: #c04d2c;
-  --c-ok: #1e8f63;
+  --c-accent: #131312;          /* чёрный — выделение/активные состояния */
+  --c-accent-strong: #131312;   /* цифры-герой: тот же чёрный, отличается размером */
+  --c-accent-text: #ffffff;     /* текст на чёрном */
+  --c-accent-soft: rgb(19 19 18 / 0.06);
+  --c-link: #131312;
+  --c-danger: #131312;
+  --c-ok: #131312;
 
-  /* светлые шаги референс-палитры; --viz-mark = золото 3.8:1 на белом */
-  --viz-mark: #a97a0e;
-  --viz-mark-soft: rgb(169 122 14 / 0.5);
-  --viz-1: #2a78d6;
-  --viz-2: #1baf7a;
-  --viz-3: #eda100;
-  --viz-4: #008300;
-  --viz-5: #4a3aa7;
-  --viz-6: #e34948;
-  --viz-7: #e87ba4;
-  --viz-8: #eb6834;
-  --viz-grid: #eceae3;
-  --viz-baseline: #d5d3ca;
+  /* монохромные марки данных */
+  --viz-mark: #1f1f1e;
+  --viz-mark-soft: rgb(31 31 30 / 0.5);
+  --viz-1: #2b2b2a;
+  --viz-2: #444440;
+  --viz-3: #5d5d58;
+  --viz-4: #767670;
+  --viz-5: #8f8f88;
+  --viz-6: #a8a8a0;
+  --viz-7: #bebeb6;
+  --viz-8: #d2d2ca;
+  --viz-grid: #ececea;
+  --viz-baseline: #cfcfcc;
+}
+
+/* --- ТЁМНАЯ — классический белый на чёрном --- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --c-bg: #0c0c0b;
+  --c-surface: #161615;
+  --c-surface-2: #201f1e;
+  --c-border: #2b2b29;
+  --c-text: #f1f1ef;
+  --c-text-muted: #9d9d97;
+  --c-text-faint: #66655f;
+
+  --c-accent: #f1f1ef;          /* белый — выделение/активные состояния */
+  --c-accent-strong: #f6f6f4;   /* цифры-герой */
+  --c-accent-text: #0c0c0b;     /* текст на белом */
+  --c-accent-soft: rgb(241 241 239 / 0.1);
+  --c-link: #f1f1ef;
+  --c-danger: #f1f1ef;
+  --c-ok: #f1f1ef;
+
+  /* монохромные марки данных */
+  --viz-mark: #e3e3e0;
+  --viz-mark-soft: rgb(227 227 224 / 0.45);
+  --viz-1: #dcdcd9;
+  --viz-2: #c0c0bc;
+  --viz-3: #a4a49f;
+  --viz-4: #888883;
+  --viz-5: #6f6f6a;
+  --viz-6: #595955;
+  --viz-7: #474743;
+  --viz-8: #383834;
+  --viz-grid: #242422;
+  --viz-baseline: #343432;
 }
 
 *,

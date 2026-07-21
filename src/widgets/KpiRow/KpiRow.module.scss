@@ -25,12 +25,9 @@
   }
 }
 
-/* Медиана — герой: тёплая золотая подложка + акцентная кромка слева. */
+/* Медиана — герой: монохром, выделяется размером и тонкой кромкой слева. */
 .primary {
-  background:
-    linear-gradient(180deg, var(--c-accent-soft), transparent 70%),
-    var(--c-surface);
-  border-color: color-mix(in srgb, var(--c-accent) 32%, var(--c-border));
+  border-color: color-mix(in srgb, var(--c-text) 22%, var(--c-border));
 
   &::before {
     content: "";
@@ -39,7 +36,7 @@
     top: 0;
     bottom: 0;
     width: 3px;
-    background: var(--c-accent);
+    background: var(--c-text);
   }
 }
 

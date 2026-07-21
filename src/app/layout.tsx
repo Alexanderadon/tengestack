@@ -1,14 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope } from "next/font/google";
+import { Inter } from "next/font/google";
 import Script from "next/script";
 import { I18nProvider } from "@/shared/lib/i18n";
 import { RegisterSW } from "./RegisterSW";
 import "./globals.scss";
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-manrope",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -28,17 +27,17 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#14130f" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f3ec" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0c0b" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f4" },
   ],
 };
 
-/** До гидрации: тема из localStorage → системная. Инлайном, чтобы не мигало. */
-const THEME_INIT = `(function(){try{var s=localStorage.getItem("ts-theme");var t=s==="light"||s==="dark"?s:(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");document.documentElement.dataset.theme=t}catch(e){}})()`;
+/** До гидрации: сохранённая тема, иначе — светлая (основная по умолчанию). Инлайном, чтобы не мигало. */
+const THEME_INIT = `(function(){try{var s=localStorage.getItem("ts-theme");document.documentElement.dataset.theme=(s==="dark"?"dark":"light")}catch(e){}})()`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" data-theme="dark" className={manrope.variable} suppressHydrationWarning>
+    <html lang="ru" data-theme="light" className={inter.variable} suppressHydrationWarning>
       <body>
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT}

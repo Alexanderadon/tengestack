@@ -9,8 +9,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Живой дашборд зарплат IT-рынка Казахстана по данным hh.kz",
     start_url: "/",
     display: "standalone",
-    background_color: "#0b0e14",
-    theme_color: "#0b0e14",
+    background_color: "#f5f5f4",
+    theme_color: "#f5f5f4",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
       { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
