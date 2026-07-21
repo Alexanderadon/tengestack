@@ -19,42 +19,45 @@
   --content-max: 1280px;
 
   /* --- типографика --- */
-  --font-sans: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-sans: var(--font-manrope), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --fs-xs: 0.75rem;
   --fs-s: 0.8125rem;
   --fs-m: 0.9375rem;
   --fs-l: 1.125rem;
-  --fs-xl: 1.5rem;
-  --fs-kpi: clamp(1.375rem, 2.6vw, 1.875rem);
+  --fs-xl: 1.55rem;
+  --fs-kpi: clamp(1.65rem, 3vw, 2.25rem);
 
-  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 16px rgb(0 0 0 / 0.06);
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.18), 0 8px 28px rgb(0 0 0 / 0.22);
   --focus-ring: 0 0 0 2px var(--c-bg), 0 0 0 4px var(--c-accent);
 }
 
-/* --- тёмная (по умолчанию) --- */
+/* --- тёмная (по умолчанию) ---
+   Тёплый нейтральный графит, без синевы: золото читается как «премиум-металл»,
+   а не как предупреждение. Все контрасты к поверхности проверены (WCAG). */
 :root,
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --c-bg: #0b0e14;
-  --c-surface: #12161f;
-  --c-surface-2: #1a1f2b;
-  --c-border: #232a38;
-  --c-text: #e7eaf1;
-  --c-text-muted: #8b93a5;
-  --c-text-faint: #5c6474;
+  --c-bg: #14130f;
+  --c-surface: #1c1a15;
+  --c-surface-2: #24211b;
+  --c-border: #322e26;
+  --c-text: #ede7db;
+  --c-text-muted: #a29889;
+  --c-text-faint: #6e6555;
 
   --c-accent: #f0b441;          /* тенге-золото */
+  --c-accent-strong: #f7c765;   /* яркий блик для акцента на цифрах */
   --c-accent-text: #1a1405;     /* текст на золоте */
-  --c-accent-soft: rgb(240 180 65 / 0.14);
-  --c-link: #7fb3f8;
-  --c-danger: #f07857;
-  --c-ok: #58c79a;
+  --c-accent-soft: rgb(240 180 65 / 0.13);
+  --c-link: #e6b968;
+  --c-danger: #ef8a63;
+  --c-ok: #63c79a;
 
   /* --- палитра данных ---
      Одномерные чарты: --viz-mark (золото, ≥3:1 к поверхности, проверено).
      Категориальные слоты — валидированный референс dataviz-скилла (тёмные шаги). */
-  --viz-mark: #d99a1b;
-  --viz-mark-soft: rgb(217 154 27 / 0.55);
+  --viz-mark: #e9ae43;
+  --viz-mark-soft: rgb(233 174 67 / 0.5);
   --viz-1: #3987e5;
   --viz-2: #199e70;
   --viz-3: #c98500;
@@ -63,25 +66,26 @@
   --viz-6: #e66767;
   --viz-7: #d55181;
   --viz-8: #d95926;
-  --viz-grid: #1f2634;
-  --viz-baseline: #333c4e;
+  --viz-grid: #262219;
+  --viz-baseline: #3a342a;
 }
 
 :root[data-theme="light"] {
   color-scheme: light;
-  --c-bg: #f7f6f2;
-  --c-surface: #ffffff;
-  --c-surface-2: #efeee9;
-  --c-border: #e0ded6;
-  --c-text: #1d212b;
-  --c-text-muted: #5f6675;
-  --c-text-faint: #9aa0ad;
+  --c-bg: #f6f3ec;
+  --c-surface: #fffdf8;
+  --c-surface-2: #efece3;
+  --c-border: #e4dfd3;
+  --c-text: #211d16;
+  --c-text-muted: #625b4e;
+  --c-text-faint: #9a9384;
 
-  --c-accent: #b07d14;
-  --c-accent-text: #ffffff;
-  --c-accent-soft: rgb(176 125 20 / 0.12);
-  --c-link: #1f66c9;
-  --c-danger: #c94f2e;
+  --c-accent: #a9760c;
+  --c-accent-strong: #8f6208;
+  --c-accent-text: #fffaf0;
+  --c-accent-soft: rgb(169 118 12 / 0.11);
+  --c-link: #9a6d10;
+  --c-danger: #c04d2c;
   --c-ok: #1e8f63;
 
   /* светлые шаги референс-палитры; --viz-mark = золото 3.8:1 на белом */
@@ -116,14 +120,14 @@ body {
   font-family: var(--font-sans);
   font-size: var(--fs-m);
   line-height: 1.5;
-  font-feature-settings: "cv05"; /* Inter: открытая l */
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3 {
   margin: 0;
-  font-weight: 650;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: -0.015em;
 }
 
 a {

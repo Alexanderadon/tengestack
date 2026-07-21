@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import Script from "next/script";
 import { I18nProvider } from "@/shared/lib/i18n";
 import { RegisterSW } from "./RegisterSW";
 import "./globals.scss";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
+  variable: "--font-manrope",
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -27,8 +28,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b0e14" },
-    { media: "(prefers-color-scheme: light)", color: "#f7f6f2" },
+    { media: "(prefers-color-scheme: dark)", color: "#14130f" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f3ec" },
   ],
 };
 
@@ -37,8 +38,8 @@ const THEME_INIT = `(function(){try{var s=localStorage.getItem("ts-theme");var t
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" data-theme="dark" suppressHydrationWarning>
-      <body className={inter.variable}>
+    <html lang="ru" data-theme="dark" className={manrope.variable} suppressHydrationWarning>
+      <body>
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT}
         </Script>

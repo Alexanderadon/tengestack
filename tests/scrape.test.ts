@@ -56,7 +56,9 @@ describe("parseLuxState", () => {
 
 describe("luxToItem", () => {
   const state = parseLuxState(FIXTURE_HTML)!;
-  const [v0, v1] = state.vacancySearchResult!.vacancies!;
+  const vacancies = state.vacancySearchResult!.vacancies!;
+  const v0 = vacancies[0]!;
+  const v1 = vacancies[1]!;
 
   it("маппит зарплату с реальным gross и валютой", () => {
     const it = luxToItem(v0);

@@ -1,6 +1,6 @@
 .row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1.35fr 1fr 1fr;
   gap: var(--gap-4);
 
   @media (max-width: 720px) {
@@ -10,10 +10,12 @@
 }
 
 .card {
+  position: relative;
   background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: var(--radius-m);
   padding: var(--gap-4) var(--gap-5);
+  overflow: hidden;
 
   @media (max-width: 720px) {
     display: flex;
@@ -23,22 +25,63 @@
   }
 }
 
+/* Медиана — герой: тёплая золотая подложка + акцентная кромка слева. */
+.primary {
+  background:
+    linear-gradient(180deg, var(--c-accent-soft), transparent 70%),
+    var(--c-surface);
+  border-color: color-mix(in srgb, var(--c-accent) 32%, var(--c-border));
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--c-accent);
+  }
+}
+
 .label {
   font-size: var(--fs-s);
+  font-weight: 600;
   color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: var(--fs-xs);
 }
 
 .value {
   font-size: var(--fs-kpi);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-top: 4px;
+  line-height: 1.05;
+}
+
+.valueHero {
+  color: var(--c-accent-strong);
+}
+
+.unit {
+  font-size: 0.62em;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-top: 2px;
+  color: color-mix(in srgb, var(--c-accent-strong) 75%, transparent);
+  margin-left: 0.18em;
+  letter-spacing: 0;
+}
+
+.dash {
+  margin: 0 0.22em;
+  color: var(--c-text-faint);
+  font-weight: 500;
 }
 
 .hint {
   font-size: var(--fs-xs);
   color: var(--c-text-faint);
-  margin-top: 2px;
+  margin-top: 4px;
 
   @media (max-width: 720px) {
     margin-left: auto;

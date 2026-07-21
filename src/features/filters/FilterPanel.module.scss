@@ -131,17 +131,36 @@
 .salaryInput {
   width: 100%;
   min-width: 0;
-  padding: 8px 10px;
+  padding: 9px 11px;
   border: 1px solid var(--c-border);
   border-radius: var(--radius-s);
   background: var(--c-bg);
   color: var(--c-text);
   font: inherit;
   font-size: var(--fs-s);
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+
+  /* убираем уродливые нативные стрелки-спиннеры */
+  appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
   &::placeholder {
     color: var(--c-text-faint);
+    font-weight: 400;
+  }
+
+  &:focus-visible {
+    border-color: var(--c-accent);
+    box-shadow: 0 0 0 3px var(--c-accent-soft);
   }
 }
 
