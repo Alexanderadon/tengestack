@@ -1,4 +1,4 @@
-$grid: minmax(220px, 1fr) 110px 92px 92px minmax(180px, 230px) 64px;
+$grid: minmax(140px, 1fr) 90px 72px 72px minmax(140px, 170px) 48px;
 
 .wrap {
   background: var(--c-surface);
@@ -27,7 +27,7 @@ $grid: minmax(220px, 1fr) 110px 92px 92px minmax(180px, 230px) 64px;
 .cols {
   display: grid;
   grid-template-columns: $grid;
-  gap: var(--gap-3);
+  gap: var(--gap-2);
   padding: 0 var(--gap-4) var(--gap-2);
   border-bottom: 1px solid var(--c-border);
 }
@@ -62,7 +62,7 @@ $grid: minmax(220px, 1fr) 110px 92px 92px minmax(180px, 230px) 64px;
 .row {
   display: grid;
   grid-template-columns: $grid;
-  gap: var(--gap-3);
+  gap: var(--gap-2);
   align-items: center;
   padding: 0 var(--gap-4);
   border-bottom: 1px solid var(--c-border);
