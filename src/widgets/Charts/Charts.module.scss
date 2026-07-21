@@ -118,9 +118,9 @@
 
 .hbarRow {
   display: grid;
-  grid-template-columns: 116px 1fr 56px 44px;
+  grid-template-columns: 92px minmax(0, 1fr) 52px 40px;
   align-items: center;
-  gap: var(--gap-3);
+  gap: var(--gap-2);
   padding: 5px 6px;
   border: 0;
   border-radius: var(--radius-s);
