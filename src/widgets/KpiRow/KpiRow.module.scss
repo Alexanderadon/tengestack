@@ -25,20 +25,7 @@
   }
 }
 
-/* Медиана — герой: монохром, выделяется размером и тонкой кромкой слева. */
-.primary {
-  border-color: color-mix(in srgb, var(--c-text) 22%, var(--c-border));
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--c-text);
-  }
-}
+/* Медиана — герой: выделяется только размером карточки и крупной цифрой. */
 
 .label {
   font-size: var(--fs-s);

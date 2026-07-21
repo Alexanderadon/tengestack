@@ -11,8 +11,8 @@ export function KpiRow({ stats }: { stats: DashboardStats }) {
 
   return (
     <section className={s.row} aria-label="Ключевые показатели">
-      {/* Медиана — герой строки */}
-      <div className={`${s.card} ${s.primary}`}>
+      {/* Медиана — герой строки (выделяется размером карточки и крупной цифрой) */}
+      <div className={s.card}>
         <div className={s.label}>{t("kpi.median")}</div>
         <div className={`${s.value} ${s.valueHero} tnum`}>
           {stats.withSalary ? (
