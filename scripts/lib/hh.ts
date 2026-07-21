@@ -41,9 +41,11 @@ export class HHClient {
 
     const { clientId, clientSecret } = this.opts;
     if (!clientId || !clientSecret) {
-      throw new Error(
-        "Нет доступа к HH API: заполни HH_CLIENT_ID/HH_CLIENT_SECRET (или HH_APP_TOKEN) в .env — регистрация приложения: https://dev.hh.ru/admin",
-      );
+      // Анонимный режим: HH отдаёт /vacancies без токена нестабильно и
+      // IP-зависимо (из КЗ — 403, из других сетей может работать).
+      // Пробуем — при 403 упадём с понятной ошибкой.
+      console.warn("HH-креденшлов нет — пробую анонимный доступ (нестабилен, зависит от IP).");
+      return (this.token = "");
     }
 
     const res = await fetch(`${API}/token`, {
@@ -80,17 +82,20 @@ export class HHClient {
     let attempt = 0;
     for (;;) {
       await this.throttle();
-      const res = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}`, "User-Agent": this.ua },
-        signal: AbortSignal.timeout(30_000),
-      });
+      const headers: Record<string, string> = { "User-Agent": this.ua };
+      if (token) headers.Authorization = `Bearer ${token}`;
+      const res = await fetch(url, { headers, signal: AbortSignal.timeout(30_000) });
       if (res.ok) return (await res.json()) as T;
 
       attempt += 1;
       const body = await res.text().catch(() => "");
       const retriable = res.status === 429 || res.status >= 500;
       if (!retriable || attempt > 5) {
-        throw new Error(`HH ${res.status} на ${url.pathname}: ${body.slice(0, 300)}`);
+        const hint =
+          res.status === 403 && !token
+            ? " (анонимный доступ отклонён с этого IP — нужен токен: заявка на dev.hh.kz, либо запусти из CI)"
+            : "";
+        throw new Error(`HH ${res.status} на ${url.pathname}: ${body.slice(0, 300)}${hint}`);
       }
       const backoff = Math.min(60_000, 1000 * 2 ** attempt);
       console.warn(`  HH ${res.status}, ретрай ${attempt}/5 через ${backoff / 1000}с`);
