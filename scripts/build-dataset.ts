@@ -57,33 +57,41 @@ async function main() {
   }
   const files = fs.readdirSync(rawDir).filter((f) => f.endsWith(".jsonl")).sort();
   if (files.length === 0) {
-    console.error("data/raw пуст — сначала запусти pnpm data:fetch.");
+    console.error("data/raw пуст — сначала запусти pnpm data:scrape (или data:fixture для dev).");
     process.exit(1);
   }
 
-  // Файлы отсортированы по дате → поздние записи перетирают ранние в Map.
+  const realFiles = files.filter((f) => !f.startsWith("synthetic"));
   const byId = new Map<string, HHVacancyItem>();
   let syntheticSource = false;
-  for (const f of files) {
-    if (f.startsWith("synthetic")) syntheticSource = true;
-    const lines = fs.readFileSync(path.join(rawDir, f), "utf8").split("\n").filter(Boolean);
-    for (const line of lines) {
-      const item = JSON.parse(line) as HHVacancyItem;
-      byId.set(item.id, item);
+
+  if (realFiles.length > 0) {
+    // Окно свежести: берём только снапшоты за последние FRESH_DAYS дней от самого свежего.
+    // «Живой срез» не должен копить давно закрытые вакансии — по умолчанию 1 = только
+    // последний снапшот (при ежедневном кроне это и есть текущий рынок). Файлы отсортированы
+    // по дате в имени (YYYY-MM-DD.jsonl) → поздние записи перетирают ранние в Map.
+    const FRESH_DAYS = Math.max(1, Number(process.env.FRESH_DAYS ?? 1));
+    const dateMs = (f: string) => Date.parse(f.slice(0, 10));
+    const cutoff = dateMs(realFiles[realFiles.length - 1]!) - (FRESH_DAYS - 1) * 86_400_000;
+    const used = realFiles.filter((f) => dateMs(f) >= cutoff);
+    for (const f of used) {
+      const lines = fs.readFileSync(path.join(rawDir, f), "utf8").split("\n").filter(Boolean);
+      for (const line of lines) {
+        const item = JSON.parse(line) as HHVacancyItem;
+        byId.set(item.id, item);
+      }
+      console.log(`  ${f}: +${lines.length} (уникальных: ${byId.size})`);
     }
-    console.log(`  ${f}: +${lines.length} строк (уникальных накоплено: ${byId.size})`);
-  }
-  // Если появились реальные выгрузки — синтетика игнорируется, а не смешивается.
-  if (syntheticSource && files.some((f) => !f.startsWith("synthetic"))) {
-    byId.clear();
-    for (const f of files.filter((x) => !x.startsWith("synthetic"))) {
+    console.log(`Окно свежести ${FRESH_DAYS} дн: использовано ${used.length}/${realFiles.length} снапшотов`);
+  } else {
+    // только синтетика (dev-режим без сети)
+    syntheticSource = true;
+    for (const f of files) {
       for (const line of fs.readFileSync(path.join(rawDir, f), "utf8").split("\n").filter(Boolean)) {
         const item = JSON.parse(line) as HHVacancyItem;
         byId.set(item.id, item);
       }
     }
-    syntheticSource = false;
-    console.log(`  синтетика отброшена, реальных вакансий: ${byId.size}`);
   }
 
   const fx = await fetchFx();

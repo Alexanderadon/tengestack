@@ -1,9 +1,11 @@
 name: Refresh dataset
 
-# Еженедельная выгрузка HH → новый снапшот → коммит → авто-деплой хостингом.
+# Ежедневная выгрузка hh.kz → свежий снапшот → коммит. Прод подтягивает данные
+# через rewrite с raw.githubusercontent (репо tengestack) — без редеплоя.
+# Скрейпинг публичных страниц идёт с IP GitHub-раннера (проверено — hh.kz пускает).
 on:
   schedule:
-    - cron: "0 2 * * 1" # понедельник 02:00 UTC (08:00 Алматы)
+    - cron: "0 19 * * *" # 19:00 UTC = 00:00 Алматы (UTC+5)
   workflow_dispatch:
 
 permissions:
@@ -21,18 +23,22 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
 
-      # Скрейпинг публичных страниц hh.kz — токен/секреты не нужны.
       - name: Scrape vacancies from hh.kz
         run: pnpm data:scrape
 
-      - name: Build columnar dataset
+      # build берёт только последний снапшот (окно свежести) — без накопления мёртвых вакансий
+      - name: Build dataset
         run: pnpm data:build
+
+      # держим лёгкий архив: только 3 последних сырых снапшота в репо
+      - name: Prune old raw snapshots (keep last 3)
+        run: ls -1 data/raw/*.jsonl 2>/dev/null | sort | head -n -3 | xargs -r rm -f || true
 
       - name: Commit snapshot
         run: |
           git config user.name "tengestack-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/raw public/data
+          git add -A data/raw public/data
           git diff --cached --quiet && echo "Nothing new" && exit 0
-          git commit -m "data: weekly snapshot $(date -u +%F)"
+          git commit -m "data: daily snapshot $(date -u +%F)"
           git push
