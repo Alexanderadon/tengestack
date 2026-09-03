@@ -16,3 +16,6 @@ data/.cache/
 # os / editor
 .DS_Store
 Thumbs.db
+
+# рендеры видео (не в репо)
+media/
