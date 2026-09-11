@@ -6,6 +6,10 @@ A live dashboard of the Kazakhstan IT salary market built from open job postings
 Medians by role, grade and city · in-demand technologies · every filter state is shareable
 as a URL · works offline (PWA).
 
+**Live:** https://workhh.vercel.app
+
+![TengeStack dashboard: medians, distribution, filters](docs/demo.gif)
+
 **Methodology:** `/methodology` page in the app · RU / EN interface
 
 > Data is read from the public search pages of hh.kz (see "Where the data comes from").
